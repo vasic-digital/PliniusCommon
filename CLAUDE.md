@@ -4,9 +4,8 @@ Module-specific guidance for Claude Code.
 
 ## Status
 
-**SCAFFOLD / WIP.** All exported method bodies return
-`ErrCodeUnimplemented`. The module compiles but is not yet
-functional. Phase-A implementation is a future milestone.
+**FUNCTIONAL.** 4 packages (config, errors, grpcclient, types) ship
+tested implementations; `go test -race ./...` all green.
 
 ## Hard rules
 
@@ -18,15 +17,28 @@ functional. Phase-A implementation is a future milestone.
 3. **Conventional Commits** -- `feat(pliniuscommon): ...`, `fix(...)`,
    `docs(...)`, `test(...)`, `refactor(...)`.
 4. **Code style** -- `gofmt`, `goimports`, 100-char line ceiling,
-   errors always checked and wrapped.
+   errors always checked and wrapped (`fmt.Errorf("...: %w", err)`).
 5. **Resource cap for tests** --
    `GOMAXPROCS=2 nice -n 19 ionice -c 3 go test -count=1 -p 1 -race ./...`
 
-## Purpose (intended)
+## Purpose
 
-Common types/errors library (shared foundation for the 8 sibling modules).
+Foundational library for the 8 sibling Plinius modules:
+- `pkg/config` — functional-options configuration
+- `pkg/errors` — structured error codes + retry classification
+- `pkg/grpcclient` — gRPC client wrapper
+- `pkg/types` — shared value types
 
-## Primary consumer
+## Primary consumers
 
-HelixAgent (`dev.helix.agent`). See the consuming-side Phase-A spec
-at `docs/superpowers/specs/2026-04-21-elder-plinius-phaseA-go-plinius-common.md` in the HelixAgent repository.
+- HelixAgent (`dev.helix.agent`) — indirect via the 8 sibling modules.
+- AutoTemp, HyperTune, I-LLM, Veritas, LeakHub, Claritas, Ouroborous,
+  GandalfSolutions — direct Go-module dependency.
+
+## Testing
+
+```
+GOMAXPROCS=2 nice -n 19 ionice -c 3 go test -count=1 -p 1 -race ./...
+```
+
+Must stay all-green on every commit.

@@ -184,7 +184,12 @@ func (c *Client) InvokeUnary(
 }
 
 // ContextWithMetadata returns a context with service metadata appended.
+// A nil ctx is treated as context.Background() so callers can use this
+// as a one-liner without pre-checking.
 func (c *Client) ContextWithMetadata(ctx context.Context) context.Context {
+	if ctx == nil {
+		ctx = context.Background()
+	}
 	md := metadata.MD{}
 
 	// Add auth token if present

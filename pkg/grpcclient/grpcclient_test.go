@@ -66,7 +66,7 @@ func TestCalculateBackoff(t *testing.T) {
 
 func TestContextWithMetadata(t *testing.T) {
 	cfg := config.New("test",
-		WithAuthToken("test-token"),
+		config.WithAuthToken("test-token"),
 	)
 	client := New(cfg)
 	// Cannot fully test without connection, but we can verify it doesn't panic
