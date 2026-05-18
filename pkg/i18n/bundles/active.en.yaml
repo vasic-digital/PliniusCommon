@@ -1,0 +1,72 @@
+# PliniusCommon i18n bundle — English (default).
+#
+# Keys are prefixed `pliniuscommon_` to avoid collision with sibling
+# submodule catalogues that a consuming project (e.g. HelixCode,
+# HelixAgent) may merge into a single bundle store. Per CONST-046 the
+# consuming project's project-side translator is the authority that
+# fans out locale overrides; this bundle is the canonical English
+# source.
+#
+# Round-135 §11.4 — kickoff scope: programmatic-message companion keys
+# for PliniusCommon's foundational utility surfaces:
+#   - pkg/config: validation diagnostics + file-load wrappers
+#   - pkg/errors: sentinel-error human messages + ErrorCode labels
+#   - pkg/grpcclient: connection-state diagnostics
+#
+# PliniusCommon itself surfaces these strings as wrapped errors and
+# structured PliniusError values consumed by other Go packages — not
+# displayed directly to end users. The companion keys below let
+# consuming projects (UI dashboards, CLI agents, diagnostic surfaces,
+# mobile clients) render the same semantic events with locale
+# awareness when PliniusCommon's output reaches a human surface.
+#
+# Existing programmatic contracts (sentinel error variables, ErrorCode
+# constants, fmt.Errorf message strings) stay verbatim for backward
+# compatibility and protocol stability; this bundle is purely additive
+# infrastructure for future consumer-side translation.
+
+# Config validation error keys
+pliniuscommon_config_err_service_name_required: "service name is required"
+pliniuscommon_config_err_address_required: "address is required"
+pliniuscommon_config_err_timeout_must_be_positive: "timeout must be positive"
+pliniuscommon_config_err_connection_timeout_must_be_positive: "connection_timeout must be positive"
+pliniuscommon_config_err_max_retries_cannot_be_negative: "max_retries cannot be negative"
+pliniuscommon_config_err_retry_backoff_must_be_positive: "retry_backoff must be positive"
+pliniuscommon_config_err_tls_cert_path_required: "tls_cert_path is required when TLS is enabled"
+
+# Config file-load error wrappers
+pliniuscommon_config_err_read_file_failed: "failed to read config file {{path}}"
+pliniuscommon_config_err_parse_file_failed: "failed to parse config file {{path}}"
+pliniuscommon_config_err_marshal_service_config_failed: "failed to marshal service config"
+pliniuscommon_config_err_unmarshal_service_config_failed: "failed to unmarshal service config"
+pliniuscommon_config_err_unmarshal_file_failed: "failed to unmarshal config file {{path}}"
+
+# Sentinel error keys (errors package)
+pliniuscommon_err_connection: "connection error"
+pliniuscommon_err_timeout: "timeout"
+pliniuscommon_err_cancelled: "cancelled"
+
+# ErrorCode labels (errors package)
+pliniuscommon_errcode_unavailable: "service unavailable"
+pliniuscommon_errcode_invalid_argument: "invalid argument"
+pliniuscommon_errcode_not_found: "not found"
+pliniuscommon_errcode_already_exists: "already exists"
+pliniuscommon_errcode_permission_denied: "permission denied"
+pliniuscommon_errcode_unauthenticated: "unauthenticated"
+pliniuscommon_errcode_resource_exhausted: "resource exhausted"
+pliniuscommon_errcode_failed_precondition: "failed precondition"
+pliniuscommon_errcode_aborted: "aborted"
+pliniuscommon_errcode_out_of_range: "out of range"
+pliniuscommon_errcode_unimplemented: "unimplemented"
+pliniuscommon_errcode_internal: "internal error"
+pliniuscommon_errcode_unknown: "unknown error"
+pliniuscommon_errcode_timeout: "timeout"
+pliniuscommon_errcode_cancelled: "cancelled"
+pliniuscommon_errcode_connection: "connection error"
+
+# gRPC client lifecycle diagnostics
+pliniuscommon_grpc_err_already_connected: "client is already connected"
+pliniuscommon_grpc_err_not_connected: "client is not connected"
+pliniuscommon_grpc_err_dial_failed: "failed to dial gRPC server at {{address}}"
+pliniuscommon_grpc_err_close_failed: "failed to close gRPC connection"
+pliniuscommon_grpc_err_invocation_failed: "gRPC invocation failed for service {{service}}"
